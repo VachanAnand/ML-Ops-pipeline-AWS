@@ -79,7 +79,7 @@ resource "aws_sqs_queue_policy" "sqs_db_policy" {
 }
 
 resource "aws_sqs_queue_policy" "sqs_zip_policy" {
-    queue_url = aws_sqs_queue.sqs_db.id
+    queue_url = aws_sqs_queue.sqs_zip.id
     policy = jsonencode({
         Version = "2012-10-17",
         Id = "sqspolicy",
