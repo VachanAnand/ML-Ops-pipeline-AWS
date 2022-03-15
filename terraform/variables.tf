@@ -18,7 +18,7 @@ variable type {
 }
 
 ######################################################################
-# LANDING VARIABLES
+# demo VARIABLES
 ######################################################################
 
 variable s3_bucket_name {
@@ -27,40 +27,57 @@ variable s3_bucket_name {
   description = "S3 bucket name for machine learning pipeline demo"
 }
 
-variable sns_landing_name {
+variable sns_name {
   type        = string
-  default     = "sns-landing"
+  default     = "sns-demo"
   description = "Name of SNS used when data lands in s3"
 }
 
-variable sqs_landing_name {
+variable sqs_db_name {
   type        = string
-  default     = "sqs-landing"
+  default     = "sqs-demo"
   description = "Name of SQS used when data lands in s3"
 }
 
-variable sqs_dlq_landing_name {
+variable sqs_db_dlq_name {
   type        = string
-  default     = "sqs-dlq-landing"
+  default     = "sqs-dlq-demo"
   description = "Name of SQS dead letter queue used when data lands in s3"
 }
 
-variable lambda_landing_name {
+variable sqs_zip_name {
   type        = string
-  default     = "lambda-landing"
+  default     = "sqs-demo"
+  description = "Name of SQS used when data lands in s3"
 }
 
-variable iam_lambda_landing_name {
+variable sqs_zip_dlq_name {
   type        = string
-  default     = "iam-lambda-landing"
+  default     = "sqs-dlq-demo"
+  description = "Name of SQS dead letter queue used when data lands in s3"
 }
 
-variable iam_policy_lambda_landing_name {
+variable lambda_name {
   type        = string
-  default     = "iam-policy-lambda-landing"
+  default     = "lambda-demo"
 }
 
-variable iam_policy_lambda_landing_logs_name {
+variable iam_lambda_name {
   type        = string
-  default     = "iam-policy-lambda-landing-logs"
+  default     = "iam-lambda-demo"
+}
+
+variable iam_policy_lambda_name {
+  type        = string
+  default     = "iam-policy-lambda-demo"
+}
+
+variable iam_policy_lambda_logs_name {
+  type        = string
+  default     = "iam-policy-lambda-demo-logs"
+}
+
+variable dynamodb_name {
+  type        = string
+  default     = "dynamodb-demo"
 }

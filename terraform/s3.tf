@@ -11,10 +11,14 @@ resource "aws_s3_bucket" "s3_ml_pipeline" {
     }
 }
 
-resource "aws_s3_bucket_notification" "s3_landing_notification" {
+resource "aws_s3_bucket_notification" "s3_notification" {
     bucket = aws_s3_bucket.s3_ml_pipeline.id
+    depends_on = [
+        aws_sns_topic.sns_topic,
+        aws_sns_topic_policy.sns_topic_policy
+    ]
     topic {
-        topic_arn = aws_sns_topic.sns_landing_topic.arn
+        topic_arn = aws_sns_topic.sns_topic.arn
         events = ["s3:ObjectCreated:*"]
     }
 }

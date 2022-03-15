@@ -1,4 +1,4 @@
-data "aws_iam_policy_document" "sns_policy_landing" {
+data "aws_iam_policy_document" "sns_policy" {
     policy_id = "__default_policy_ID"
     statement {
         actions = [
@@ -17,7 +17,7 @@ data "aws_iam_policy_document" "sns_policy_landing" {
             type        = "AWS"
             identifiers = ["*"]
         }
-        resources = [ aws_sns_topic.sns_landing_topic.arn ]
+        resources = [ aws_sns_topic.sns_topic.arn ]
         condition {
             test     = "ArnLike"
             variable = "aws:SourceArn"
@@ -31,8 +31,8 @@ data "aws_iam_policy_document" "sns_policy_landing" {
 # SNS 
 ######################################################################
 
-resource "aws_sns_topic" "sns_landing_topic" {
-    name = var.sns_landing_name
+resource "aws_sns_topic" "sns_topic" {
+    name = var.sns_name
     tags = {
         environment = var.environment
         creator = var.creator
@@ -40,13 +40,13 @@ resource "aws_sns_topic" "sns_landing_topic" {
     }
 }
 
-resource "aws_sns_topic_policy" "sns_landing_topic_policy" {
-    arn = aws_sns_topic.sns_landing_topic.arn
-    policy = data.aws_iam_policy_document.sns_policy_landing.json
+resource "aws_sns_topic_policy" "sns_topic_policy" {
+    arn = aws_sns_topic.sns_topic.arn
+    policy = data.aws_iam_policy_document.sns_policy.json
 }
 
 resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
-    topic_arn = aws_sns_topic.sns_landing_topic.arn
+    topic_arn = aws_sns_topic.sns_topic.arn
     protocol  = "sqs"
-    endpoint  = aws_sqs_queue.sqs_landing.arn
+    endpoint  = aws_sqs_queue.sqs_db.arn
 }
