@@ -63,3 +63,25 @@ resource "aws_iam_role_policy" "iam_policy_lambda_logs" {
   })
 }
 
+
+resource "aws_iam_role_policy" "iam_policy_lambda_dynamodb" {
+  name = var.iam_policy_lambda_dynamodb_name
+  role = aws_iam_role.iam_lambda.id
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement =[{
+      Effect = "Allow",
+      Action = [
+        "dynamodb:BatchGetItem",
+        "dynamodb:GetItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem"
+      ],
+      Resource = "*"
+    }
+    ]
+  })
+}

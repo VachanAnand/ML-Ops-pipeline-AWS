@@ -57,7 +57,12 @@ variable sqs_zip_dlq_name {
   description = "Name of SQS dead letter queue used when data lands in s3"
 }
 
-variable lambda_name {
+variable lambda_zip_name {
+  type        = string
+  default     = "lambda-demo"
+}
+
+variable lambda_db_name {
   type        = string
   default     = "lambda-demo"
 }
@@ -73,6 +78,11 @@ variable iam_policy_lambda_name {
 }
 
 variable iam_policy_lambda_logs_name {
+  type        = string
+  default     = "iam-policy-lambda-demo-logs"
+}
+
+variable iam_policy_lambda_dynamodb_name {
   type        = string
   default     = "iam-policy-lambda-demo-logs"
 }
