@@ -27,6 +27,12 @@ variable s3_bucket_name {
   description = "S3 bucket name for machine learning pipeline demo"
 }
 
+variable s3_datalake_name {
+  type        = string
+  default     = "dl"
+  description = "S3 bucket name for machine learning pipeline demo"
+}
+
 variable sns_name {
   type        = string
   default     = "sns-demo"
@@ -45,19 +51,19 @@ variable sqs_db_dlq_name {
   description = "Name of SQS dead letter queue used when data lands in s3"
 }
 
-variable sqs_zip_name {
+variable sqs_dl_name {
   type        = string
   default     = "sqs-demo"
   description = "Name of SQS used when data lands in s3"
 }
 
-variable sqs_zip_dlq_name {
+variable sqs_dl_dlq_name {
   type        = string
   default     = "sqs-dlq-demo"
   description = "Name of SQS dead letter queue used when data lands in s3"
 }
 
-variable lambda_zip_name {
+variable lambda_dl_name {
   type        = string
   default     = "lambda-demo"
 }
@@ -90,4 +96,14 @@ variable iam_policy_lambda_dynamodb_name {
 variable dynamodb_name {
   type        = string
   default     = "dynamodb-demo"
+}
+
+variable ecr_db_name {
+  type        = string
+  default     = "demo/db"
+}
+
+variable ecr_dl_name {
+  type        = string
+  default     = "demo/dl"
 }

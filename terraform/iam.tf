@@ -41,7 +41,13 @@ resource "aws_iam_role_policy" "iam_policy_lambda" {
         "Action": "*",
         "Effect": "Allow",
         "Resource": "*"
-      }
+      },
+      {
+        "Sid": "",
+        "Action": "s3:*",
+        "Effect": "Allow",
+        "Resource": "*"
+      }    
     ]
   })
 }

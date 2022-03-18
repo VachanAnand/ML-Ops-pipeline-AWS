@@ -1,4 +1,4 @@
-repo_name="lambda_db"
+repo_name="demo/database"
 tag="test"
 
 docker build -t ${repo_name}:${tag} .

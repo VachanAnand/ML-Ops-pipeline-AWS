@@ -11,6 +11,14 @@ resource "aws_s3_bucket" "s3_ml_pipeline" {
     }
 }
 
+resource "aws_s3_bucket" "s3_datalake" {
+    bucket = var.s3_datalake_name
+    tags = {
+        environment = var.environment
+        creator = var.creator
+        type = var.type
+    }
+}
 resource "aws_s3_bucket_notification" "s3_notification" {
     bucket = aws_s3_bucket.s3_ml_pipeline.id
     depends_on = [

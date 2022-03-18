@@ -26,17 +26,17 @@ resource "aws_sqs_queue" "sqs_db_dlq" {
 }
 
 ######################################################################
-# SQS S3 Zip
+# SQS S3 dl (Data Lake)
 ######################################################################
 
 
-resource "aws_sqs_queue" "sqs_zip" {
-    name = var.sqs_zip_name
+resource "aws_sqs_queue" "sqs_dl" {
+    name = var.sqs_dl_name
     redrive_policy = jsonencode({
-        deadLetterTargetArn = aws_sqs_queue.sqs_zip_dlq.arn
+        deadLetterTargetArn = aws_sqs_queue.sqs_dl_dlq.arn
         maxReceiveCount = 5
     })
-    depends_on = [aws_sqs_queue.sqs_zip_dlq]
+    depends_on = [aws_sqs_queue.sqs_dl_dlq]
     tags = {
         environment = var.environment
         creator = var.creator
@@ -44,8 +44,8 @@ resource "aws_sqs_queue" "sqs_zip" {
     }
 }
 
-resource "aws_sqs_queue" "sqs_zip_dlq" {
-    name = var.sqs_zip_dlq_name
+resource "aws_sqs_queue" "sqs_dl_dlq" {
+    name = var.sqs_dl_dlq_name
     tags = {
         environment = var.environment
         creator = var.creator
@@ -78,8 +78,8 @@ resource "aws_sqs_queue_policy" "sqs_db_policy" {
     })
 }
 
-resource "aws_sqs_queue_policy" "sqs_zip_policy" {
-    queue_url = aws_sqs_queue.sqs_zip.id
+resource "aws_sqs_queue_policy" "sqs_dl_policy" {
+    queue_url = aws_sqs_queue.sqs_dl.id
     policy = jsonencode({
         Version = "2012-10-17",
         Id = "sqspolicy",
@@ -89,7 +89,7 @@ resource "aws_sqs_queue_policy" "sqs_zip_policy" {
                 Effect = "Allow",
                 Principal = "*",
                 Action = "sqs:SendMessage",
-                Resource = ["${aws_sqs_queue.sqs_zip.arn}"],
+                Resource = ["${aws_sqs_queue.sqs_dl.arn}"],
                 Condition = {
                     ArnEquals = {
                         "aws:SourceArn" = "${aws_sns_topic.sns_topic.arn}"
