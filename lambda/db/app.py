@@ -1,14 +1,18 @@
 import json
-import pandas as pd
+import boto3
+import csv
 
 def save_data_dynamodb(bucket,key):
     s3_uri = f's3://{bucket}/{key}'
     print('s3_uri',s3_uri)
-    df = pd.read_csv(s3_uri)
-    print('Boop')
-    print('printing record : ',df['Gender'].iloc[0])
-    print(df)
-    print('Blip')
+    s3_resource = boto3.resource('s3')
+    s3_object = s3_resource.Object(bucket, key)
+    data = s3_object.get()['Body'].read().decode('utf-8').splitlines()
+    lines = csv.reader(data)
+    headers = next(lines)
+    print('headers: %s' %(headers))
+    for line in lines:
+        print(line)
     
 def lambda_handler(event, context):
     print(event)

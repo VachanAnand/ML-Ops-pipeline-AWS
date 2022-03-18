@@ -27,39 +27,26 @@ resource "aws_iam_role" "iam_lambda" {
 resource "aws_iam_role_policy" "iam_policy_lambda" {
   name = var.iam_policy_lambda_name
   role = aws_iam_role.iam_lambda.id
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
+    policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
       {
-        Action = [
-          "sqs:ChangeMessageVisibility",
-          "sqs:DeleteMessage",
-          "sqs:GetQueueAttributes",
-          "sqs:ReceiveMessage",
-        ],
-        Effect   = "Allow"
-        Resource = "*"
+        "Sid": "Stmt1647603180830",
+        "Action": "s3:*",
+        "Effect": "Allow",
+        "Resource": "arn:aws:s3:::ml-pipeline-demo/*"
       },
+      {
+        "Sid": "Stmt1647603239834",
+        "Action": "*",
+        "Effect": "Allow",
+        "Resource": "*"
+      }
     ]
   })
 }
 
-resource "aws_iam_role_policy" "iam_policy_lambda_s3" {
-  name = var.iam_policy_lambda_name
-  role = aws_iam_role.iam_lambda.id
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = [
-          "s3:GetObject",
-        ],
-        Effect   = "Allow"
-        Resource = "arn:aws:s3:::ml-pipeline-demo"
-      },
-    ]
-  })
-}
+
 
 resource "aws_iam_role_policy" "iam_policy_lambda_logs" {
   name = var.iam_policy_lambda_logs_name
