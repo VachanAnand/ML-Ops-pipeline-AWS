@@ -2,6 +2,34 @@
 # LAMBDA DB 
 ######################################################################
 
+
+
+
+resource "aws_lambda_function" "lambda_landing" {
+    function_name = var.lambda_landing_name
+    image_uri = "464866296249.dkr.ecr.ap-southeast-2.amazonaws.com/demo/load-amplify:test"
+    package_type = "Image"
+    role = aws_iam_role.iam_lambda.arn
+    tags = {
+        environment = var.environment
+        creator = var.creator
+        type = var.type
+        version = "v4"
+    }
+}
+
+
+resource "aws_lambda_permission" "allow_bucket" {
+  statement_id  = "AllowExecutionFromS3Bucket"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.lambda_landing.arn
+  principal     = "s3.amazonaws.com"
+  source_arn    = "arn:aws:s3:::${var.s3_amplify_bucket_name}"
+}
+
+
+
+
 resource "aws_lambda_function" "lambda_db" {
     function_name = var.lambda_db_name
     image_uri = "464866296249.dkr.ecr.ap-southeast-2.amazonaws.com/demo/database:test"

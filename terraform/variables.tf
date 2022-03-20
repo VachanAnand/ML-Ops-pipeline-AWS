@@ -27,6 +27,12 @@ variable s3_bucket_name {
   description = "S3 bucket name for machine learning pipeline demo"
 }
 
+variable s3_amplify_bucket_name {
+  type        = string
+  default     = "ml-pipeline"
+  description = "S3 bucket name for machine learning pipeline demo"
+}
+
 variable s3_datalake_name {
   type        = string
   default     = "dl"
@@ -73,6 +79,11 @@ variable lambda_db_name {
   default     = "lambda-demo"
 }
 
+variable lambda_landing_name{
+  type        = string
+  default     = "lambda-demo"
+}
+
 variable iam_lambda_name {
   type        = string
   default     = "iam-lambda-demo"
@@ -106,4 +117,9 @@ variable ecr_db_name {
 variable ecr_dl_name {
   type        = string
   default     = "demo/dl"
+}
+
+variable ecr_amplify_name {
+  type        = string
+  default     = "demo/amplify"
 }

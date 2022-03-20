@@ -13,7 +13,7 @@ def put_record_dynamodb(line):
         'Age': line[5]
     }
     dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table('vachan-dynamo-user-demo')
+    table = dynamodb.Table('vachan-dynamo-users-demo')
     response = table.put_item(
         Item=record
         )
@@ -37,7 +37,7 @@ def lambda_handler(event, context):
         for record in json.loads(body['Message'])['Records']:
             bucket = record['s3']['bucket']['name']
             key = record['s3']['object']['key']
-            if '.csv' in key:
+            if 'users.csv' in key:
                 save_data_dynamodb(bucket,key)  
             else:
                 print('Not CSV')  
